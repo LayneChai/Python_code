@@ -1,0 +1,670 @@
+import re
+# ret = re.split(r'[\s\,]+','a b c ,,,,d')
+# print(ret)
+#
+# ret = re.match(r'\d{3}[\s\-]+\d{5}','010 - 12345')
+# print(ret.group(0))
+
+#在匹配的过程中可以用()括起来之后表示要提取的分组（Group）
+#用括号括起来表示一个分组
+# ret = re.match(r'^(\d{3}) - (\d{5})$','010 - 12345')
+# #0对应的而原始字符串  1对应的第一个分组  2对应的第二个分组
+# print(ret.group(0),ret.group(1),ret.group(2))
+
+# 非贪婪模式匹配最少的匹配的本来可以匹配很多，非贪婪模式只取到第一个匹配到的字符串
+# ret = re.match(r'^(\d+?)(0*)$','102300').groups()
+# print(ret)
+# ('1023', '00') 是因为\d+?  只是匹配到满足的第一个字符串
+
+#如果以恶搞正则表达式要用大很多次可以先编译出来
+
+# re_compile = re.compile(r'^(\d{3})-(\d{3,8})$')
+#编译完之后就得到 一个变异对象之后可以直接用这个去匹配字符 串了
+# ret = re_compile.match('010-12345').groups()
+# 编译后生成Regular Expression对象，由于该对象自己包含了正则表达式，所以调用对应的方法时不用给出正则字符串。
+
+
+
+# 模块一  datetime
+from datetime import datetime
+# now = datetime.now()
+# print(now)
+# dt = datetime(2015,10,1,12,1)  #构建自己想要的时间
+# print(dt)
+# print(dt.timestamp())  #这个表示把日期变成秒数，表示相比较于1970年1月1日到现在的秒数
+
+# t = 1443672060.0
+# #转换成本地时间  因为本地时间想比喻UTC的时间差8个小时
+# print(datetime.fromtimestamp(t))   #把时间戳对应的秒数转变成当前的时间
+# #转化成UTC时间
+# print(datetime.utcfromtimestamp(t))   #把时间戳对应的秒数转变成当前的时间
+
+# str 转换成datetime时间
+#设定了日期和时间部分的格式(时间格式是确定的)
+# day = datetime.strptime('2015:6:1 18:19:59','%Y-%m-%d %H:%M:%S')
+# print(day)
+
+# datetime时间转换成str
+# now = datetime.now()
+# print(now)
+# print(now.strftime('%a %b %d %H:%M'))  #strftime可以用time和datetime调用
+
+from datetime import timedelta,timezone
+
+# now = datetime.now()
+# now = now+timedelta(hours=10)   #在当前时间上加上10个小时
+# now = now+timedelta(days=1,hours=10)  #在当前时间上加上1天零10个小时
+# 使用timedelta你可以很容易地算出前几天和后几天的时刻
+#local time（UTC+8.0）  translate   UTC time（UTC+0.0）
+
+# tz_utc_8  = timezone(timedelta(hours=8))  #创建时区 UTC+8：00
+# now = datetime.now()
+# print(now)
+# dt = now.replace(tzinfo=tz_utc_8) #强制设置成UTC+8:00
+# print(dt)
+
+# utc_dt = datetime.utcnow().replace(tzinfo=timezone.utc)  #拿到当前的时间
+# print(utc_dt)
+# #时间=（转换时区(时区（时间差（时间差值））)）
+# bj_dt = utc_dt.astimezone(timezone(timedelta(hours=8))) #转化成北京时间
+
+
+#*******************************************collection*****************
+
+
+# from collections import namedtuple
+# Point = namedtuple('Point',['x','y'])  #定义一个坐标不用再定义一个类那么麻烦
+# p = Point(1,2)
+# print(p.x)
+
+
+
+# from collections import deque   #相当于导入一个队列
+# q = deque(['a','b','c'])
+# q.append('x')
+# q.appendleft('y')
+
+#defaultdict  使用dict时  如果引用的key不存在就会抛出keyerror异常
+# from collections import defaultdict
+# dd = defaultdict(lambda :'N/A')   #如果希望可以不存在的时候，返回默认值急用defaultdict
+# dd['key1'] = 'abc'
+# print(dd['key1'])
+# print(dd['key2'])
+
+from collections import OrderedDict
+# OrderedDict可以实现一个FIFO（先进先出）的dict，当容量超出限制时，先删除最早添加的Key：
+# OrderedDict的Key会按照插入的顺序排列，不是Key本身排序
+# d = dict([('a',1),('b',2),('c',3)])
+# print(d)
+# od = OrderedDict([('b',1),('a',2),('c',3)])
+# print(od)
+# od = OrderedDict()
+# od['z']=1
+# od['y']=2
+# od['x']=2
+# print(dict(od))
+
+from collections import ChainMap
+# ChainMap可以把一组dict串起来并组成一个逻辑上的dict
+#我们可以用ChainMap实现参数的优先级查找，即先查命令行参数，如果没有传入，再查环境变量，如果没有，就使用默认参数。
+# import os,argparse
+# #关于argparse的用法# https://www.cnblogs.com/dengtou/p/8413609.html
+# # argparse是python标准库里面用来处理命令行参数的库    命令行参数分为位置参数和选项参数
+# #构造缺省参数
+# defaults ={
+#     'color':'RED',
+#     'user':'GUEST'
+# }
+#
+# #构造命令行参数
+# parser = argparse.ArgumentParser()  #创建一个解析对象
+# parser.add_argument('-u','--user')  #向该对象中添加要关注的命令行参数和选项
+# parser.add_argument('-c','--color')
+#
+# namespace = parser.parse_args()  #进行解析
+# # vars() 函数返回对象object的属性和属性值的字典对象。
+# # items() 方法以列表返回可遍历的(键, 值) 元组数组。
+# command_line_args = {k:v for k,v in vars(namespace).items() if v}
+#组合成chainmap
+# combined = ChainMap(command_line_args,os.environ,defaults)
+# print('color = %s'%combined['color'])  #打印对应的参数
+# print('user = %s'%combined['user'])
+# 没有任何参数时，打印出默认参数：
+# $ python3 use_chainmap.py
+# color=red
+# user=guest
+# 当传入命令行参数时，优先使用命令行参数：
+# $ python3 use_chainmap.py -u bob
+# color=red
+# user=bob
+
+
+
+# counter  Counter是一个简单的计数器，例如，统计字符出现的个数：
+#
+# from collections import Counter
+# c = Counter()  #用于统计一个字符串中每个字符串出现的次数
+# for ch in 'kjhkhjkhjk':
+#     c[ch]+=1
+# print(c)
+
+
+
+# Base64  用于加码解码
+import base64
+# ret = base64.b64encode(b'abcdef')
+# print(type(ret),str(ret,encoding='utf-8'))  #把字节类型转变成str类型
+#
+# # ret1 = base64.b64decode(str(ret,encoding='utf-8'))
+# ret1 = base64.b64decode(ret)
+# print(ret1)
+
+# 由于变换之后可能出现+ - 在URL中就不能直接作为参数 ，所以就有一种'url safe'的base64编码，其实就是把字符+-分别变成- _
+# ret = base64.urlsafe_b64encode(b'asdasd')
+# ret = base64.b64encode(b'i\xb7\x1d\xfb\xef\xff')
+# print(ret)
+# ret = base64.urlsafe_b64encode(b'i\xb7\x1d\xfb\xef\xff')
+# print(ret)
+# ret_decode = base64.urlsafe_b64decode(ret)
+# print(ret_decode)
+
+# 标准Base64:
+# 'abcd' -> 'YWJjZA=='
+# # 自动去掉=:
+# 'abcd' -> 'YWJjZA'
+# 去掉=后怎么解码呢？因为Base64是把3个字节变为4个字节，所以，Base64编码的长度永远是4的倍数，
+# 因此，需要加上=把Base64字符串的长度变为4的倍数，就可以正常解码了。
+
+
+# Struct
+# 如果把一个32位无符号后数变成字节要转化成4个长度的bytes
+# n = 10240099
+# b1 = (n&0xff000000) >>24
+# b2 = (n&0xff0000) >>16
+# b3 = (n&0xff00) >>8
+# b4 = (n&0xff)
+# bs = bytes([b1,b2,b3,b4])
+# print(bs)   太过麻烦
+
+# struct模块来解决bytes和其他二进制数据类型的转换。
+
+# struct的pack函数把任意数据类型变成bytes：
+import struct
+# ret = struct.pack('>I',10240099)
+# print(type(ret),ret)   # > 表示字节顺序是big-endian  是网络序  I表示四个字节无符号整数
+
+
+# unpack 把bytes转变成bytes相应的数据类型
+# ret = struct.unpack('>IH',b'\xf0\xf0\xf0\xf0\x80\x80')
+# print(ret)  #根据>IH的说明，后面的bytes依次变为I：4字节无符号整数和H：2字节无符号整数。
+
+
+
+# windows的位图文件（.bmp）是一种非常简单的文件格式
+#>  #微处理器将高位字节放在低地址单元中
+#< #微处理器将低位字节放在高地址单元中
+
+# s=b'\x42\x4d\x38\x8c\x0a\x00\x00\x00\x00\x00\x36\x00\x00\x00\x28\x00\x00\x00\x80\x02\x00\x00\x68\x01\x00\x00\x01\x00\x18\x00'
+# s='Qk1oAgAAAAAAADYAAAAoAAAAHAAAAAoAAAABABAAAAAAADICAAASCwAAEgsAAAAAAAAAAAAA/3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9/AHwAfAB8AHwAfAB8AHwAfP9//3//fwB8AHwAfAB8/3//f/9/AHwAfAB8AHz/f/9//3//f/9//38AfAB8AHwAfAB8AHwAfAB8AHz/f/9//38AfAB8/3//f/9//3//fwB8AHz/f/9//3//f/9//3//f/9/AHwAfP9//3//f/9/AHwAfP9//3//fwB8AHz/f/9//3//f/9/AHwAfP9//3//f/9//3//f/9//38AfAB8AHwAfAB8AHwAfP9//3//f/9/AHwAfP9//3//f/9//38AfAB8/3//f/9//3//f/9//3//fwB8AHwAfAB8AHwAfAB8/3//f/9//38AfAB8/3//f/9//3//fwB8AHz/f/9//3//f/9//3//f/9/AHwAfP9//3//f/9/AHwAfP9//3//fwB8AHz/f/9/AHz/f/9/AHwAfP9//38AfP9//3//f/9/AHwAfAB8AHwAfAB8AHwAfAB8/3//f/9/AHwAfP9//38AfAB8AHwAfAB8AHwAfAB8/3//f/9//38AfAB8AHwAfAB8AHwAfAB8/3//f/9/AHwAfAB8AHz/fwB8AHwAfAB8AHwAfAB8AHz/f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//3//f/9//38AAA=='
+# s = base64.b64decode(s)
+# print(s)
+# def bmp_info(data):
+#     return{
+#         'width':200,
+#         'height':100,
+#         'color':24
+#     }
+# bi= bmp_info(s)
+# assert bi['width'] == 28
+# print('ok')
+# ret = struct.unpack('<ccIIIIIIHH',s)
+# print(bi['width'])
+# b'B'、b'M'说明是Windows位图，位图大小为640x360，颜色数为24
+
+
+
+
+#hashlib
+# 生成结果是固定的128 bit字节，通常用一个32位的16进制字符串表示。
+import hashlib   #daoruhashlib类
+# md5 = hashlib.md5()
+# str = 'how to use md5 in python hashlib?'
+# md5.update(str.encode('utf-8'))   #update就相当于加密
+# print(md5.hexdigest())             #按照16进制格式输出
+# md5.update(str.encode('utf-8'))    #此时对str加密的时候就相当于对 str+str两个字符串拼接之后的加密
+# 为了防止这种干扰我们每次都要重新实例化：
+#对于汉语要用encode('utf-8') 进行格式化
+
+"""
+# 方法一：
+# hashlib.algorithms_guaranteed或者hashlib.algorithms_available这两个内置属性查看hashlib支持哪些加密算法。
+# hashlib.new(name[,data])方法
+# name传入的时候哈希加密算法的名称
+m = hashlib.new('md5')
+m.update(b'123456')
+print(m.hexdigest())
+"""
+
+"""
+# hash.update(arg)
+# 传入的arg来更新hash对象该方法只接受byte类型否则会报错，这就是要在参数前加上b的原因
+# 重复调用update(arg)方法，是会将传入的arg参数进行拼接，而不是覆盖
+# m.update(a); m.update(b) 等价于m.update(a+b)
+"""
+# m = hashlib.md5()
+#
+# m.update(b'123456')
+# print(m.hexdigest())
+# sha1 = hashlib.sha1()    #改用sha1的加密算法
+# sha1.update('how'.encode('utf-8'))
+# print(sha1.hexdigest())
+# m = hashlib.new('md5')
+# m.update(b'cyl')
+# ret1 = m.hexdigest()
+
+# m = hashlib.new('md5')
+# m.update(b'ctw')
+# ret2 =m.hexdigest()
+#
+#
+# db = {
+#     'cyl':ret1,
+#     'ctw':ret2
+# }
+# # #
+# def login(user,password):
+#     md = hashlib.md5()
+#     md.update(password.encode('utf-8'))
+#     p1 = md.hexdigest()
+#     for i in db:
+#         if i == user and db[i] ==p1:
+#             return True
+#     return False
+# print(login('ctw','ctw'))
+
+#遍历字典的时候可以按照下边的进行遍历
+# for key,value in dict.items():
+#     print(key,value)
+
+
+"""
+在更早为了黑客通过彩虹表根据hash反推口令常用一个salt
+如果salt是我们自己随机生成的，通常我们计算MD5时采用md5(message + salt)
+hmac  可以用于更深层次的加密
+计算哈希的过程中，把key混入计算过程中。
+"""
+# import hmac
+# message = b'hello,world!'
+# key = b'secret'
+# h = hmac.new(key,message,digestmod='MD5')
+# print(h.hexdigest())
+
+
+"""
+itertools  提供非常有用的用于操作迭代对象的函数
+itertools  提供的‘无限’迭代器
+前提是在for循环中
+count（） 会创建一个无限的迭代器
+cycle()  会把传入的序列无限迭代下去
+repeat()  会把一个元素无限循环下去
+chain()可以把一组迭代对象串联起来，形成一个更大的迭代器：
+groupby()把迭代器中相邻的重复元素挑出来放在一起：
+通常我们会通过takewhile()等函数根据条件判断来截取出一个有限的序列：
+ ns = itertools.takewhile(lambda x: x <= 10, natuals)
+>>> for c in itertools.chain('ABC', 'XYZ'):
+...     print(c)
+# 迭代效果：'A' 'B' 'C' 'X' 'Y' 'Z'
+
+>>> for key, group in itertools.groupby('AAABBBCCAAA'):
+...     print(key, list(group))
+A ['A', 'A', 'A']
+B ['B', 'B', 'B']
+C ['C', 'C']
+A ['A', 'A', 'A']
+
+# 实际上挑选规则是通过函数完成的，只要作用于函数的两个元素返回的值相等，这两个元素就被认为是在一组的，而函数返回值作为组的key。如果我们要忽略大小写分组，就可以让元素'A'和'a'都返回相同的key：
+
+for key, group in itertools.groupby('AaaBBbcCAAa', lambda c: c.upper()):
+    print(key, list(group))
+
+"""
+
+
+
+"""
+contextlib
+并不是只有open函数对文件的fp对象使用with语句，正常的对象只要实现了上下文管理就行
+在类中只要包含  __enter__  和  __exit__  方法
+"""
+# eg1:
+# class Foo(object):
+#     def __init__(self,name):
+#         self.name = name
+#     def __enter__(self):
+#         print('Begin')
+#         return self
+#
+#     def __exit__(self, exc_type, exc_val, exc_tb):
+#         if exc_type:
+#             print('Error')
+#         else:
+#             print('End')
+#     def query(self):
+#         print('Query info about %s..'%self.name)
+#
+# #这样我们就可以用with语句
+# with Foo('Bob') as f: #当有上下文的时候先执行__enter__  然后执行with语句中调用的方法 最后一执行__rxit__
+#     f.query()
+
+# 可以不写__enter__ 和  __exit__ 方法然后直接用@contextmanager
+from contextlib import contextmanager
+
+# class Foo(object):
+#     def __init__(self,name):
+#         self.name =name
+#
+#     def query(self):
+#         print(self.name)
+#
+# @contextmanager          #相当于一个生成器   在执行某段代码前和后要执行某些代码可以用这个
+# def create(name):
+#     print('start')
+#     q = Foo(name)
+#     yield q     #执行q中Query语句即可
+#     print('end')
+#
+# with create('Bob') as q:
+#     q.query()
+
+#不仅是在类中在方法中也是如此  如果想在一个方法执行之前和之后执行一些其他的代码若是想要用with
+# 语句的话 可以用这个 @contextmanager
+
+# closing也是一个经过@contextmanager装饰的generator，这个generator编写起来其实非常简单
+
+#如果一个对象没有上下文可以通过closeing来变成上下文对象
+# from contextlib import closing
+# from urllib.request import urlopen   #urlopen  试下对目标url的访问
+#
+# with closing(urlopen('http://www.baidu.com/')) as f:
+#     for i in f:
+#         print(i)
+
+
+"""
+urllib  
+# urllib的request模块可以非常方便地抓取URL内容，也就是发送一个GET请求到指定的页面，然后返回HTTP的响应：
+"""
+from urllib import request
+#可以看到HTTP相应的头和JSON数据
+# with request.urlopen('https://api.douban.com/v2/book/2129650') as f:
+#     date = f.read()
+#     print('status:',f.status,f.reason)
+#     for k,v in f.getheaders():
+#         print('%s:%s'%(k,v))
+#     print('Data:',date.decode('utf-8'))
+
+# req = request.Request('http://www.douban.com/')   #建立一个request对象
+#Request 返回一个对象 <urllib.request.Request object at 0x000001D2FD351D30>
+
+# req.add_header('User-Agent', 'Mozilla/6.0 (iPhone; CPU iPhone OS 8_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/8.0 Mobile/10A5376e Safari/8536.25')
+#增加请求头部（模拟的ipone6的请求头部）
+
+# with request.urlopen(req) as f:          #这是按照get的方式或得的数据
+#     print('Status:',f.status,f.reason)
+#     for k,v in  f.getheaders():
+#         print('%s %s'%(k,v))
+#     print('Data:',f.read().decode('utf-8'))
+
+#Post 发送一个请求 只需要把参数以bytes形式传入
+
+# from urllib import request,parse
+#
+# print('Login to weibo.cn...')
+# email = input('Email:')
+# passwd = input('Password:')
+#
+# login_data = parse.urlencode(
+#     [
+# ('username', email),
+#     ('password', passwd),
+#     ('entry', 'mweibo'),
+#     ('client_id', ''),
+#     ('savestate', '1'),
+#     ('ec', ''),
+#     ('pagerefer', 'https://passport.weibo.cn/signin/welcome?entry=mweibo&r=http%3A%2F%2Fm.weibo.cn%2F')
+#     ]
+# )
+# req = request.Request('https://passport.weibo.cn/sso/login')
+# req.add_header('Origin', 'https://passport.weibo.cn')
+# req.add_header('User-Agent', 'Mozilla/6.0 (iPhone; CPU iPhone OS 8_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/8.0 Mobile/10A5376e Safari/8536.25')
+# req.add_header('Referer', 'https://passport.weibo.cn/signin/login?entry=mweibo&res=wel&wm=3349&r=http%3A%2F%2Fm.weibo.cn%2F')
+# with request.urlopen(req,data=login_data.encode('utf-8')) as f:
+#     print('Status:',f.status,f.reason)    #f.status  返回的是状态码  f.reason返回的是状态类型
+#     for k,v in f.getheaders():
+#         print('%s:%s'%(k,v))
+#     print('Data:',f.read().decode('utf-8'))
+# Handler
+# 如果还需要更复杂的控制，比如通过一个Proxy去访问网站，我们需要利用ProxyHandler来处理，示例代码如下：
+# proxy_handler = urllib.request.ProxyHandler({'http': 'http://www.example.com:3128/'})
+# proxy_auth_handler = urllib.request.ProxyBasicAuthHandler()
+# proxy_auth_handler.add_password('realm', 'host', 'username', 'password')
+# opener = urllib.request.build_opener(proxy_handler, proxy_auth_handler)
+# with opener.open('http://www.example.com/login.html') as f:
+#     pass
+
+# urllib提供的功能就是利用程序去执行各种HTTP请求。如果要模拟浏览器完成特定功能，需要把请求伪装成浏览器。伪装的方法是先监控浏览器发出的请求，再根据浏览器的请求头来伪装，User-Agent头就是用来标识浏览器的。
+
+
+#在python中用SAX解析的时候遇到一个节点是会产生三个事件
+# <a href="/">python</a>
+# {
+# # start_element事件，在读取<a href="/">时；
+# #
+# # char_data事件，在读取python时；
+# #
+# # end_element事件，在读取</a>时。
+# }
+
+
+#ParserCreate  创建一个解析器
+from xml.parsers.expat import ParserCreate
+
+class DefaultSaxHandler(object):
+    def start_element(self,name,attrs):
+        print('sax:start_element:%s,attrs:%s'%(name,str(attrs)))
+    def end_element(self,name):
+        print('sax:end_element:%s'%name)
+    def char_data(self,text):
+        print('sax:char_data:%s'%text)
+
+xml=r"""<?xml version="1.0"?>
+<ol>
+    <li><a href="/python">Python</a></li>
+    <li><a href="/ruby">Ruby</a></li>
+</ol>
+"""
+# handler = DefaultSaxHandler()
+# parser = ParserCreate()
+#
+# parser.StartElementHandler = handler.start_element
+# parser.EndElementHandler = handler.end_element
+# parser.CharacterDataHandler = handler.char_data
+#
+# parser.Parse(xml)
+HTML本质上是XML的子集，但是HTML的语法没有XML那么严格，所以不能用标准的DOM或SAX来解析HTML。
+
+好在Python提供了HTMLParser来非常方便地解析HTML，只需简单几行代码：
+
+# from html.parser import HTMLParser
+# from html.entities import name2codepoint
+#
+# class MyHTMLParser(HTMLParser):
+#
+#     def handle_starttag(self, tag, attrs):
+#         print('<%s>' % tag)
+#
+#     def handle_endtag(self, tag):
+#         print('</%s>' % tag)
+#
+#     def handle_startendtag(self, tag, attrs):
+#         print('<%s/>' % tag)
+#
+#     def handle_data(self, data):
+#         print(data)
+#
+#     def handle_comment(self, data):
+#         print('<!--', data, '-->')
+#
+#     def handle_entityref(self, name):
+#         print('&%s;' % name)
+#
+#     def handle_charref(self, name):
+#         print('&#%s;' % name)
+#
+# parser = MyHTMLParser()
+# parser.feed('''<html>
+# <head></head>
+# <body>
+# <!-- test html parser -->
+#     <p>Some <a href=\"#\">html</a> HTML&nbsp;tutorial...<br>END</p>
+# </body></html>''')
+# feed()方法可以多次调用，也就是不一定一次把整个HTML字符串都塞进去，可以一部分一部分塞进去。
+#
+# 特殊字符有两种，一种是英文表示的&nbsp;，一种是数字表示的&#1234;，这两种字符都可以通过Parser解析出来。
+
+
+
+# 1.常用属性：
+#
+# 　　　　lasttag，保存上一个解析的标签名，是字符串。
+#
+# 　　2.常用方法：　
+#
+# 　　　　handle_starttag(tag, attrs) ，处理开始标签，比如<div>；这里的attrs获取到的是属性列表，属性以元组的方式展示
+# 　　　　handle_endtag(tag) ，处理结束标签,比如</div>
+# 　　　　handle_startendtag(tag, attrs) ，处理自己结束的标签，如<img />
+# 　　　　handle_data(data) ，处理数据，标签之间的文本
+# 　　　　handle_comment(data) ，处理注释，<!-- -->之间的文本
+
+"""
+知识点补充  
+在正则表达式中[] 括起来的就不需要转义了
+"""
+
+
+# from html.parser import HTMLParser   #HTMLParser 用于解析html
+# from html.entities import name2codepoint
+# 
+# class MyHtmlParser(HTMLParser):  #继承HTMLParser并重写他的方法
+#     def _attr(self,attrlist,attrname):  #传进去一个属性列表 和要查找的属性名字自加方法  返回属性名对应的属性
+#         for attr in attrlist:
+#             if attr[0] == attrname:
+#                 return attr[1]     #返回属性
+#         return None
+#     def handle_starttag(self, tag, attrs):  #处理开始的标签
+#         """
+#         recognize start tag like <div>
+#         :param tag:
+#         :param attrs:
+#         :return:
+#         """
+#         #如果想要获得p标签的属性列表
+#         # if tag == 'p':
+#         #     print('Encountered p attrs :',attrs)
+# 
+#         #获取p标签的class属性
+#         # if tag == 'p' and _attr(attrs,'class'):
+#         #     print('Encountered p class :', _attr(attrs,'class'))
+#         print('Encountered a start tag:',tag)   #print a 开始的标签
+#     def handle_endtag(self, tag):
+#         """
+#         recognize end tag  like </div>
+#         :param tag:
+#         :return:
+#         """
+#         print('Encountered a end tag:',tag)
+#     def handle_data(self, data):
+#         """
+#         recognize data  html content string
+#         :param data:
+#         :return:
+#         """
+#         #如果想要只是获取p标签的文本 则可用如下方式
+#         # if self.lasttag == 'p':      #保存上一个解析的标签名
+#         print('Encountered some data :',data)   #print data
+#     def handle_startendtag(self, tag, attrs):
+#         """
+#         include handle_starttag  and  handle_endtag  use to deal
+#         the empty tag like the <image />
+#         :param tag:
+#         :param attrs:
+#         :return:
+#         """
+#         print('Encountered a handle_startendtag:',tag)
+#     def handle_comment(self, data):
+#         """
+#         recognize  thr <!---->  and deal it
+#         :param data:
+#         :return:
+#         """
+#         print('Encountered comment :',data)
+#     """
+#     #获取css样式（class）为p_font的p标签的文本，使用了案例1，增加一个实例属性作为标志，选取需要的标签
+#     def __init__(self):
+#     HTMLParser.__init__(self)
+#     self.flag = False
+# 
+#     def handle_starttag(self, tag, attrs):
+#         if tag == 'p' and _attr(attrs, 'class') == 'p_font':
+#             self.flag = True
+#             
+#     def handle_data(self, data):
+#         if self.flag == True:
+#             print("Encountered p data  :", data)
+#         """
+# 
+# class CommentHtmlParser(HTMLParser):  #对注释的部分进行处理
+#     def __init__(self):
+#         HTMLParser.__init__(self)
+#     
+#     def handle_comment(self, data):
+#         cparser = MyHtmlParser()    #  获取对应的解析对象
+#         cparser.feed(data)
+# 
+# parser = MyHtmlParser()
+# 
+# parser.feed("""
+# <html>
+#     <head>
+#         <title>Test</title>
+#     </head>
+#     <body>
+#         <h1>Parse me!</h1>
+#         <img src = "" />
+#         <p>A paragraph.</p>
+#                 <p class = "p_font">A paragraph with class.</p>
+#                 <!-- comment -->
+#         <div>
+#             <p>A paragraph in div.</p>
+#         </div>
+#     </body>
+# </html>  
+# """)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
