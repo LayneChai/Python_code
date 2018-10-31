@@ -1,0 +1,133 @@
+# __getattr__方法
+# 拦截点号运算。当对未定义的属性名称和实例进行点号运算时，就会用属性名作为字符串调用这个方法。如果继承树可以找到该属性，则不调用此方法
+
+# __setattr__方法
+# 会拦截所有属性的的赋值语句。如果定义了这个方法，self.arrt = value 就会变成self,__setattr__("attr", value).这个需要注意。当在__setattr__方法内对属性进行赋值是，不可使用self.attr = value,因为他会再次调用self,__setattr__("attr", value),则会形成无穷递归循环，最后导致堆栈溢出异常。应该通过对属性字典做索引运算来赋值任何实例属性，也就是使用self.__dict__['name'] = value.
+#
+# class ObjectDict(dict):
+#     def __init__(self, *args, **kwargs):
+#         super(ObjectDict, self).__init__(*args, **kwargs)   #调用父类的__init__()方法
+#
+#     def __getattr__(self, name):
+#         value =  self[name]        #self[name]因为是[]实现的所以会调用__getitem__(name)  之后会返会name
+#         if isinstance(value, dict):
+#             value = ObjectDict(value)
+#         return value
+#
+# if __name__ == '__main__':
+#     od = ObjectDict(asf={'a': 1}, d=True)
+#     print(od.asf,od.asf.a)     # {'a': 1} 1
+#     # print(od.d)                 # True
+
+
+
+# class F():
+#     def __init__(self,**kwargs):
+#         self.asd=kwargs
+# try：
+# except Exception  as e:
+# finally:
+# try 可以跨越多层调用使用try...except捕获错误还有一个巨大的好处，就是可以跨越多层调用，
+# 比如函数main()调用foo()，foo()调用bar()，结果bar()出错了，这时，只要main()捕获到了，就可以处理：
+
+
+# class Foo():
+#     __te = 12
+#     def ser(self):
+#         return self.__te
+#     def get(self):
+#         return self.__te
+# class son(Foo):
+#     def take(self):
+#         return super(son, self).ser()
+#         # return self.get()
+#
+# f = son()
+# print(f.take())
+import os
+#在子进程中通过getppid()可以返回父进程的pid（就是进程号）
+#在调用fork的时候调用一次返回两次因为操作系统自动把当前进程（父进程）复制了一份（子进程）然后分别在父进程和子进程中的返回
+#子进程返回零  父进程返回子进程的id
+
+# print('%s'%os.getpid())
+# pid = os.fork()   #在windows中没有fork
+# if pid == 0:
+#     print('I am child process(%s) and my parent is %s'%os.getpid() %os.getppid())
+# else:
+#     print('%s  is created %s'%pid %os.getpid())
+
+# from multiprocessing import Process   #从多进程中导入进程
+# import  os
+# def run_proc(name): #这个函数用于子线程
+#     print('%s'%os.getpid())
+#
+# if __name__=='__main__':
+#     print('parent process %s'%os.getpid())
+#     p = Process(target=run_proc,args=('test1',))  #元组不能忘了一个元素的话要加上一个逗号
+#     p.start()   #一般父进程的id号要小于子进程
+#     p.join()    #join方法可以等带子进程结束之后再向下执行
+#     print('end')
+
+#Pool如果要用到大量的子进程就可以用进程池的方式批量创建子进程
+from multiprocessing import Pool    #导入进程池
+import os,time,random
+
+# def  long_time_task(name):
+#     print('Run task %s (%s)..'%(name,os.getpid()))
+#     start = time.time()
+#     time.sleep(random.random()*3)   #random.random()只能产生[0,1)之间的浮点数字
+#     end = time.time()
+#     print('Task %s runs %0.2f seconds.'%(name,(end-start)))
+# if __name__=='__main__':
+#     print('parent process %s is runing'%os.getpid())
+#     p = Pool(4)   #进程池中右个可用的进程
+#     for i in range(5):
+#         p.apply_async(long_time_task,args=(i,))
+#     print('waitting all subprocess done...')
+#     p.close()
+#     p.join()  #调用join（）之前先调用close()因为close之后就不能调用子进程了
+#     print('All processes is done')
+
+
+#很多时候子进程并不是自身，而是一个外部进程。
+# subprocess
+import subprocess
+# r = subprocess.call(['nslookup','www.python.com'])
+# print('Exit code:',r)
+# 如果子进程还需要输入，则可以通过communicate()方法输入：
+
+# p = subprocess.Popen(['nslookup'],stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+# output,err = p.communicate(b'set q=mx\npython.org\nexit\n')
+# print(output.decode('utf-8'))
+# print('exit code:',p.returncode)
+
+#进程间通信
+# from multiprocessing import Process,Queue
+# import os,time,random
+#
+# def write(q):
+#     print('Process To write %s'%os.getpid())
+#     for value in ['a','b']:
+#         print('put %s  to queue'%value)
+#         q.put(value)
+#         time.sleep(random.random())
+#
+#
+# def read(q):
+#     print('process t oread ;%s'%os.getpid())
+#     while True:
+#         value = q.get(True) #打印从队列中独到的字符
+#         print('Get %s from queue.'%value)
+#
+# if __name__=='__main__':
+#     #父进程创建Queue然后传递给子进程
+#     q = Queue()
+#     pw = Process(target=write,args=(q,))
+#     pr = Process(target=read,args=(q,))
+#     pw.start()
+#     pr.start()
+#     pw.join()
+#     # pr进程里是死循环，无法等待其结束，只能强行终止:
+#     pr.terminate()
+#
+# # 结论:父进程所有Python对象都必须通过pickle序列化再传到子进程去，所有，如果multiprocessing在Windows下调用失败了，要先考虑是不是pickle失败了

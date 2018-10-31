@@ -1,0 +1,142 @@
+import time, threading
+# threading.current_thread()  #返回当前的线程变量
+#
+# def loop():
+#     print('子线程running....')
+#     n=0
+#     while n<5:
+#         n=n+1
+#         print('子线程:%s'%(threading.current_thread().name))
+# t = threading.Thread(target=loop,name='loopThread') #子线程在这里命名
+# t.start()
+# t.join()  #主线程阻塞一直到子线程结束
+# print('主线程%s'%threading.current_thread().name)
+
+# 多进程中同一个变量各自拷贝一份存在每个进程中互相不影响  而多线程中同一个变量有多个线程共享
+
+#多个线程同时运行会把内容改乱掉因为多线程是交叉执行的而高级程序中的一条语句在线程中是分成几条执行的
+
+# balance = 0
+# def son(n):
+#     global balance
+#     balance+=n
+#     balance-=n
+#
+# def run1(n):
+#     for i in range(1000):
+#         son(n)
+# t1 = threading.Thread(target=run1,args=(5,))
+# t2 = threading.Thread(target=run1,args=(8,))
+# t1.start()
+# t2.start()
+# t1.join()
+# t2.join()
+# print(balance)
+
+# 运行过程可能如下：
+# 初始值 balance = 0
+# t1: x1 = balance + 5  # x1 = 0 + 5 = 5
+# t2: x2 = balance + 8  # x2 = 0 + 8 = 8
+# t2: balance = x2      # balance = 8
+# t1: balance = x1      # balance = 5
+# t1: x1 = balance - 5  # x1 = 5 - 5 = 0
+# t1: balance = x1      # balance = 0
+# t2: x2 = balance - 8  # x2 = 0 - 8 = -8
+# t2: balance = x2   # balance = -8
+# 结果 balance = -8
+# 因为修改balance需要多条语句，而执行这几条语句时，线程可能中断，从而导致多个线程把同一个对象的内容改乱了。
+
+# balance = 0
+# lock = threading.Lock()  #create  a lock to lock thread
+# def son(n):
+#     global balance
+#     balance+=n
+#     balance-=n
+#
+# def run1(n):
+#     for i in range(1000):
+#         lock.acquire()  #获取锁  主旨了多线程并发执行多个锁也可能会造成死锁   但是这样会导致多线程的死锁
+#         try:
+#             son(n)
+#         finally:
+#             lock.release() #释放锁
+#
+# t1 = threading.Thread(target=run1,args=(5,))
+# t2 = threading.Thread(target=run1,args=(8,))
+# t1.start()
+# t2.start()
+# t1.join()
+# t2.join()
+# print(balance)
+
+#因为多个线程可能对一个变量同时操纵的时候会混乱的修改一个全局变量的值，但是可以通过加锁又可能会造成死锁
+# ，可以通过传递变量，但是会浪费太多资源可以用一个dict key 用threading.current_thread() [当前线程的变量值]    要修改的值当作key
+
+
+# global_dict = {}
+#
+# def std_thread(name):
+#     std = Student(name)
+#     # 把std放到全局变量global_dict中：
+#     global_dict[threading.current_thread()] = std
+#     do_task_1()
+#     do_task_2()
+#
+# def do_task_1():
+#     # 不传入std，而是根据当前线程查找：
+#     std = global_dict[threading.current_thread()]
+#     ...
+#
+# def do_task_2():
+#     # 任何函数都可以查找出当前线程的std变量：
+#     std = global_dict[threading.current_thread()]
+#
+# # 这种方式理论上是可行的，它最大的优点是消除了std对象在每层函数中的传递问题，但是，每个函数获取std的代码有点丑。
+
+# 接着就有了ThreadLocal 就不用查找dict ThreadLocal帮你自动做这件事
+
+local_school = threading.local()  #创建一个全局的threadlocal对象
+#可以理解local_school 是一个dict每个线程都可以访问local_school但是local_school.student对应的是相当于线程的局部变量
+# def process_student():
+#     std = local_school.student   #此时就可以获得当前线程相关联的student了
+#     print('Hello %s(in%s)'%(std,threading.current_thread().name))  #打印当前对应的进程的名字和当前的进程名字
+#
+#
+# def process_thread(name):
+#     local_school.student=name  #不同的线程对应不同的student
+#     process_student()
+#
+# t1 = threading.Thread(target=process_student,args=('Alice'),name='Thread-A')
+# t2 = threading.Thread(target=process_student(),args=('Bob',),name='Thread-B')
+#
+# t1.start()
+# t2.start()
+# t1.join()
+# t2.join()
+
+# 小结
+# 一个ThreadLocal变量虽然是全局变量，但每个线程都只能读写自己线程的独立副本，互不干扰。
+# ThreadLocal解决了参数在一个线程中各个函数之间互相传递的问题
+
+#进程和线程的VS
+
+# 进程 Master-Worker，主进程就是Master，其他进程就是Worker。
+# 多进程模式最大的优点就是稳定性高  因为一个子进程崩溃之后不会影响其他主进程和子进程的运行
+#但是进程的创建代价大在unix/linux系统下用fork调用还行，在windows下边创建进程的开销很大，操作系统运行的进程数也是有限的
+#在内存和cpu的限制下，操作系统连调度都是问题
+
+
+#多线程模式通常比多进程的快一点但是多线程的致命的缺点就是任何一个线程挂掉会影响主进程和其他子进程，会把所有进程结束
+
+# python适用于IO密集型 因为运行速度低
+
+
+
+
+# Python的multiprocessing模块不但支持多进程，其中managers子模块还支持把多进程分布到多台机器上。一个服务进程可以作为调度者，将任务分布到其他多个进程中，依靠网络通信。由于managers模块封装很好，不必了解网络通信的细节，就可以很容易地编写分布式多进程程序。
+
+
+
+
+
+

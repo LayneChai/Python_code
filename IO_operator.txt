@@ -1,0 +1,137 @@
+import  os
+#文件的IO操作
+# with open(r'E:\test.txt','r')  as f:      #当打开文件的时候用with的时候就不需要去用f.close因为执行完之后会调用close（）方法
+#     print(f.read(10))
+# f.close()
+#图片视频是用rb  二进制字节的形式去读取
+# with open(r'E:\test.txt','r')  as f:      #当打开文件的时候用with的时候就不需要去用f.close因为执行完之后会调用close（）方法
+#     print(f.read(10).strip())             #strip()是吧末尾的\n去掉
+# 要读取非UTF-8编码的文本文件，需要给open()函数传入encoding参数，例如，读取GBK编码的文件：
+#
+# >>> f = open('/Users/michael/gbk.txt', 'r', encoding='gbk')
+# >>> f.read()
+# '测试'
+#还可能遇到有一些编码不规范的文件，你可能遇到UnicodeDecodeError，因为在文本文件中可能夹杂了一些非法编码的字符。遇到这种情况，open()函数还接收一个errors参数，表示如果遇到编码错误后如何处理。最简单的方式是直接忽略：
+# f = open('/Users/michael/gbk.txt', 'r', encoding='gbk', errors='ignore')
+# with open('/Users/michael/test.txt', 'w') as f:
+#     f.write('Hello, world!')
+# 要写入特定编码的文本文件，请给open()函数传入encoding参数，将字符串自动转换成指定编码。
+
+# 内存中
+#
+#
+# import requests
+# def mp3_download():
+#     mp3_url = 'http://zhangmenshiting.qianqian.com/data2/music/dc0bdb4e85f9374800e2e4165f3aca10/596010701/596010701.mp3?xcode=16f08d0003b5165e37ff48ca31f559c2'
+#     #发送请求
+#     response = requests.get(mp3_url)
+#     with open('test.mp3','wb') as f:
+#         f.write(response.content)
+
+# from io import StringIO    #stringIO 就是在缓冲区中进行读写
+# f = StringIO()
+# f.write('gjh')
+# print(f.getvalue())
+
+# f = StringIO('hell\nasda\nq')  #stringIO 只能是对字符出啊内进行操作
+# while  True:
+#     s = f.readline()
+#     if s=='':
+#         break;
+#     else:
+#         print(s.strip())  #去掉取出的字符串的前边的和后边的空格和\t
+
+# from io import BytesIO
+#
+# f = BytesIO()
+# f.write('阿瑟东'.encode('utf-8'))  #写入的时候如果按照编码的方式写入，则输出的时候就以解码的方式输出
+# print(f.getvalue().decode('utf-8'))
+
+
+
+# print(os.name)
+# print(os.uname())    #这个uname没有在windows上
+# print(os.environ.get('path'))  #获取环境变量   用get可以获取某个key对应的环境变量
+# print(os.path.abspath('.'))   #获得当前路径的绝对路径
+# print(os.path.join(r'C:\Users\Acmer\Desktop\untitled','testdir')) #先把这个
+# os.makedirs(r'C:\Users\Acmer\Desktop\untitled\testdir1',mode=777,exist_ok=False) #exist_ok 查看要创建的文件夹是不是已经存在
+# os.makedirs()
+# os.getcwd()  #获得当亲工作的路径
+
+# a= 'a'
+# b= 'd'
+# c=[a,b]
+# c=''.join(c)   #join是对列表中的每个元素进行拼接在一起
+# print(c)
+#os.path.split('文件路径') 把一个路径分成两部分一部分是当前路径的部分另一部分是哪个文件名字
+# ret = os.path.split(r'C:\Users\Acmer\Desktop\untitled\venv\Scripts\python.exe')
+# print(ret)
+#这个splitext 是把一个路径分为两部分一部分是文件绝对路径，另一部分是扩展名
+# ret = os.path.splitext(r'C:\Users\Acmer\Desktop\untitled\venv\Scripts\python.exe')
+# print(ret)
+
+
+#对当前路径下的文件重命名
+# os.rename('tt','ta')
+#一处当前路径下的文件
+# os.remove('ta')
+#连续获得上级的目录路径
+# ret = os.path.split(os.path.split(os.path.abspath('.'))[0])[0]
+#列出当前目录下的所有文件夹
+# for x in os.listdir('.'):
+#     if os.path.isdir(x):
+#         print(x)
+#列出所有的python文件
+# for x in os.listdir('.'):
+#     if os.path.isfile(x) and os.path.splitext(x)[1]=='.py':
+#         print(x)
+
+
+ # 序列化 pickle()  只在一个python之间传输对象dumps 和 dump 把对象准换成python认识的byte化文件  loads load把文件中的自己字节文件取出的时候用rb
+# os.mknod("tes")  #windows上边不支持这个mknod函数
+import pickle
+# d=dict(name='asd',age=12)
+# ret = pickle.dumps(d)
+# with open('tt.txt','wb') as f:
+#     f.write(ret)        #按照pickle序列化之后的方式写进去
+
+# with open('tt.txt','rb') as f:
+#     d = pickle.load(f)    #这个load相当于 f.read()+pickle.loads()
+# print(d)
+
+
+# json序列化之后就是一串字符串被任何语言识别出来
+# python 内置的json模块提供了完善的python对象到JSON之间的转换
+import json
+# d = dict(name='Bob',age=20,score=80)
+# ret = json.dumps(d)
+# print(ret,type(ret))
+class Foo():
+    def __init__(self,name):
+        self.name=name
+s = Foo('asd')
+def translate(s):
+    return {
+        'name':s.name
+    }
+
+# print(json.dumps(s))   #关于类的序列化不能是直接序列化的因为class 的对象 不能直接转化成json模式
+# 要写一个把类转化成dict的函数先把类的对象转化成dict类型的再把dictjson序列化
+#也可用s.__dict__()  转化成字典类型的对象
+
+
+# print(json.dumps(s,default=translate))  #把s按照default的默认方法转换之后再转化成字节流
+# print(json.dumps(s.__dict__))  #也可以通过这个进行序列化
+
+#如果字典中有汉语的时候  用ensure_ascII = False
+
+
+# obj = dict(name='阿瑟东')
+# s = json.dumps(obj,ensure_ascii=False)  #该成ascii码之后就可以了
+# print(s)
+
+
+
+
+
+
