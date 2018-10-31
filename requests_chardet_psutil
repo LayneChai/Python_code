@@ -1,0 +1,126 @@
+
+"""
+requests module. 
+"""
+
+import requests
+#不带参数的请求
+# r = requests.get('https://www.douban.com/') #豆瓣首页
+# print(r.status_code) #关于get的状态码
+# print(r.text)   #网页的代码内容
+
+
+#带参数的请求
+# r = requests.get('https://www.douban.com/search',params={'q':'python','cat':'1001'})
+# r真正的请求的是  'https://www.douban.com/search?q=python&cat=1001'
+# print(r.url)
+# print(r.encoding)
+# print(r.content)  #content属性获得bytes对象
+
+
+#对于特定的相应 比如JSON可以直接获取
+# r = requests.get('https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20%3D%202151330&format=json')
+# print(r.json())
+
+
+#当需要传入 HTTp header
+# r = requests.get('https://www.douban.com/', headers={'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit'})
+# print(r.text)
+#要发送Post请求只需要用个体方法变成post然后出啊如data参数
+
+r = requests.post('https://accounts.douban.com/login', data={'form_email': 'abc@example.com', 'form_password': '123456'})
+# requests默认使用application/x-www-form-urlencoded对POST数据编码。如果要传递JSON数据，可以直接传入json参数：
+
+# params = {'key':'value'}
+# r = requests.post(url='',json=params)
+#上传文件
+# >>> upload_files = {'file': open('report.xls', 'rb')}
+# >>> r = requests.post(url, files=upload_files)
+# 要在请求中传入Cookie，只需准备一个dict传入cookies参数：
+#
+# >>> cs = {'token': '12345', 'status': 'working'}
+# >>> r = requests.get(url, cookies=cs)
+# 最后，要指定超时，传入以秒为单位的timeout参数：
+#
+# >>> r = requests.get(url, timeout=2.5) # 2.5秒后超时
+
+import chardet
+# ret = chardet.detect(b'Hello,world!')
+# print(ret) #{'encoding': 'ascii', 'confidence': 1.0, 'language': ''}
+# data = '哈哈哈'.encode('gbk')   #检测汉语不行，总能检测出不同类型的编码格式
+# ret = chardet.detect(data)
+# print(ret)
+
+import psutil
+# ret = psutil.cpu_count()  #获得cpu的逻辑数量
+# ret1 = psutil.cpu_count(logical=False)  #cpu物理核心
+# print(ret,ret1)
+# ret = psutil.cpu_times() #统计用户/系统/空闲时间
+# print(ret)
+#在实现类似top命令的CPU使用率每秒刷新一次，累计10次
+# psutil获取系统cpu使用率的方法是cpu_percent(),其有两个参数，分别是interval和percpu,interval指定的是计算cpu使用率的时间间隔，percpu则指定是选择总的使用率还是每个cpu的使用率
+# for x in range(10):
+#     print(psutil.cpu_percent(interval=1,percpu=True)) #间隔为1
+
+# ret = psutil.virtual_memory()  #获取物理内存信息  这都是运行内存
+# ret1 = psutil.swap_memory()    #获取交换内存信息
+# print(ret)
+# print(ret1)
+
+#获取磁盘信息
+# ret = psutil.disk_partitions()  #磁盘分区信息
+# ret1 = psutil.disk_usage('/')#磁盘使用情况
+# ret2 = psutil.disk_io_counters() #获取磁盘io信息
+# print ("""*          #测试多行输出
+# ***
+# *****
+# ***
+# *""")
+# print(ret,'\n',ret1,'\n',ret2)
+
+
+
+#获取网络信息(网络接口和网络连接信息)
+# ret = psutil.net_io_counters()  #获取网络读写字节/包的个数
+# ret_interface = psutil.net_if_addrs()  #获取网络接口的信息
+# ret_interface_status = psutil.net_if_stats()  #获取网络接口状态
+# ret_con = psutil.net_connections()      #获取网络连接信息
+#
+# print(ret,'\n',ret_interface,'\n',ret_interface_status,'\n',ret_con)
+
+psutil.pids()  #获取所有进程id
+[0, 4, 120, 424, 608, 700, 844, 868, 980, 1004, 548...]
+p = psutil.Process(608)
+p.name()          #获取线程名字
+'csrss.exe'
+p.cwd()             #获取线程工作路径
+p.cmdline()         #进程启动的命令行
+
+p.ppid()             #获得父进程id
+p.parent()           #获得父进程
+p.children()         #获得子进程
+# p.status()         #获得进程状态
+# 'running'
+# >>> p.username() # 进程用户名
+# 'michael'
+# >>> p.create_time() # 进程创建时间
+# 1511052731.120333
+# >>> p.terminal() # 进程终端
+# '/dev/ttys002'
+# >>> p.cpu_times() # 进程使用的CPU时间
+# pcputimes(user=0.081150144, system=0.053269812, children_user=0.0, children_system=0.0)
+# >>> p.memory_info() # 进程使用的内存
+# pmem(rss=8310784, vms=2481725440, pfaults=3207, pageins=18)
+# >>> p.open_files() # 进程打开的文件
+# []
+# >>> p.connections() # 进程相关网络连接
+# []
+# >>> p.num_threads() # 进程的线程数量
+# 1
+# >>> p.threads() # 所有线程信息
+# [pthread(id=1, user_time=0.090318, system_time=0.062736)]
+# >>> p.environ() # 进程环境变量
+# {'SHELL': '/bin/bash', 'PATH': '/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:...', 'PWD': '/Users/michael', 'LANG': 'zh_CN.UTF-8', ...}
+# >>> p.terminate() # 结束进程
+# Terminated: 15 <-- 自己把自己结束了
+# psutil还提供了一个test()函数，可以模拟出ps命令的效果：
