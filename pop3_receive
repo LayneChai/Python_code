@@ -60,8 +60,8 @@ def print_info(msg,indent=0):
             print('%s Attachment: %s'%(' '*indent,content_type))
 
 #输入邮件地址  口令和pop3的服务器地址
-email_user = '13166992919@163.com' #input('Email:')
-password = '13166992919cyl'  #input('Password:')
+email_user = '邮箱地址@163.com' #input('Email:')
+password = '邮箱授权码'  #input('Password:')
 pop3_server = 'pop.163.com'
 
 #连接到pop3服务器
