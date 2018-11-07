@@ -1,0 +1,42 @@
+"""
+死锁测试   以及 用递归锁解决死锁   在用递归锁的时候，是锁住了变量在自己修改的时候不被别人修改
+"""
+import threading
+import time
+class Foo():
+    def ta(self):
+        print('ta  start ...%s'%(threading.currentThread()))
+        lock.acquire()
+        print('ta->1')
+        time.sleep(0.5)
+        lock.acquire()
+        print('ta->2')
+        lock.release()
+        lock.release()
+
+    def tb(self):
+        print('tb start...%s'%(threading.currentThread()))
+        lock.acquire()
+        print('tb->1')
+        time.sleep(0.5)
+        lock.acquire()
+        print('tb->2')
+        lock.release()
+        lock.release()
+
+if __name__ == '__main__':
+    # lockA = threading.Lock()
+    # lockB = threading.Lock()
+    lock = threading.RLock()    #Rlock中是一把递归锁  相当于是一把锁加计数器
+    t = Foo()
+    T=[]
+    t1 = threading.Thread(target=t.ta)
+    T.append(t1)
+    t2 = threading.Thread(target=t.tb)
+    T.append(t2)
+
+    for i in range(2):
+        T[i].start()
+
+    for i in range(2):
+        T[i].join()
