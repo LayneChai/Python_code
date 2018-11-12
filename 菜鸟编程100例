@@ -313,3 +313,37 @@ while m>=1:
 
 
 
+
+
+
+
+
+
+
+"""
+test 41 题目：模仿静态变量的用法。
+"""
+# class Static():
+#     tes=1
+#     def func(self):
+#         self.tes+=1
+#         print(self.tes)
+#
+# print(Static.tes)
+# a = Static()
+# a.func()
+# a.func()
+
+"""
+test 42学习使用auto定义变量的用法
+"""
+
+num = 2
+def autofunc():
+    num = 1
+    print('add')
+    num+=1
+for i in range(3):
+    print("The number is %s"%num)
+    num+=1
+    autofunc()
