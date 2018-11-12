@@ -225,26 +225,141 @@ test14 题目：将一个正整数分解质因数。例如：输入90,打印出9
 #             t/=i
 
 
-
-
-
-
-
+"""
+test15 利用条件运算符的嵌套来完成此题：学习成绩>=90分的同学用A表示，60-89分之间的用B表示，60分以下的用C表示。
+"""
+# t = int(input('>>>').strip())
+# if t>=90:
+#     grade = 'A'
+# elif t>=60:
+#     grade='B'
+# else:grade='C'
+# print(grade)
 
 
 
 """
-test22 两个乒乓球队进行比赛，各出三人。甲队为a,b,c三人，乙队为x,y,z三人。
-已抽签决定比赛名单。有人向队员打听比赛的名单。a说他不和x比，c说他不和x,z比，请编程序找出三队赛手的名单。
+test16  题目：输出指定格式的日期
+"""
+# import datetime
+# if __name__=='__main__':
+#     #输出今日日期，格式为dd/mm/yyyy,用strftime()
+#     print(datetime.date.today().strftime('%d/%m/%Y'))
+#     #创建日期对象
+#     Date1 = datetime.date(1941,1,5)
+#     print(Date1.strftime('%d/%m/%Y'))
+#     #日期的算数运算
+#     Date1 = Date1 + datetime.timedelta(days=1)
+#     print(Date1.strftime('%d/%m/%Y'))  #strftime是格式化
+#     # 日期的替换
+#     Date1=Date1.replace(year=Date1.year-1)
+#     print(Date1.strftime('%d/%m/%Y'))
+
+
+
+"""
+test17 题目：输入一行字符，分别统计出其中英文字母、空格、数字和其它字符的个数。
 """
 
+# s = input('>>>')
+# num=0
+# cha=0
+# spa=0
+# oth=0
+# i=0
+# while i<len(s):
+#
+#     if s[i].isalpha():
+#         cha+=1
+#     elif s[i].isdigit():
+#         num+=1
+#     elif s[i].isspace():
+#         spa+=1
+#     else:
+#         oth+=1
+#     i+=1
+# print(num,cha,spa,oth)
+
+
+"""
+test18s=a+aa+aaa+aaaa+aa...a的值，其中a是一个数字。例如2+22+222+2222+22222(此时共有5个数相加)，几个数相加由键盘控制。
+"""
+# a = int(input('>>>').strip())
+# n = int(input('>>>').strip())
+# l=[]
+# flag = 0
+# while n>0:
+#     l.append(str((n*a+flag)%10))
+#     flag=int((n*a+flag)/10)
+#     n-=1
+#
+# while flag:
+#     l.append(str(flag%10))
+#     flag=int(flag/10)
+# ret = ''.join(l[::-1])
+# print(ret)
+
+
+"""
+test19题目：一个数如果恰好等于它的因子之和，这个数就称为"完数"。例如6=1＋2＋3.编程找出1000以内的所有完数。
+"""
+# import math
+# i=6
+# while i<=6:
+#     ans,j=0,1
+#     cnt =math.sqrt(i)
+#     # print(cnt)
+#     while j<cnt:
+#         print(j)
+#         if i%j==0:
+#             ans+=(j+i/j)
+#         j+=1
+#
+#     if cnt*cnt==i:
+#         ans += cnt
+#     ans-=i   #把6减去
+#     if ans == i:
+#         print(i)
+#     i+=1
+
+"""
+test20 题目：一球从100米高度自由落下，每次落地后反跳回原高度的一半；再落下，求它在第10次落地时，共经过多少米？第10次反弹多高？
+"""
+# ans = 100
+# cnt = 100/2
+# jl=0
+# while cnt:
+#     ans+=(cnt*2)
+#     jl+=1
+#     if jl == 10:
+#         print('第10次弹起的高度%f'%cnt)
+#         break
+#     cnt/=2
+# print(ans)
+
+"""
+test21猴子吃桃问题：猴子第一天摘下若干个桃子，当即吃了一半，还不瘾，又多吃了一个第二天早上又将剩下的桃子吃掉一半，
+又多吃了一个。以后每天早上都吃了前一天剩下的一半零一个。到第10天早上想再吃时，见只剩下一个桃子了。求第一天共摘了多少。
+"""
+# ans = 1
+# for i in range(9):
+#     ans = (ans+1)*2
+# print(ans)
+
+
+
+"""
+test22 两个乒乓球队进行比赛，各出三人。甲队为a,b,c三人，乙队为x,y,z三人。已抽签决定比赛名单。有人向队员打听比赛的名单。
+a说他不和x比，c说他不和x,z比，请编程序找出三队赛手的名单。
+"""
+# ord(a)  输出对应ascii码
+# chr(97) 输出ascii码对应的字符
 # for i in range(ord('x'),ord('z')+1):
-#     for j in range(ord('x'), ord('z') + 1):
-#         if i!=j:
-#             for k in range(ord('x'), ord('z') + 1):
-#                 if i!=j and j!=k and i!=k:
-#                     if i!=ord('x') and k != ord('x') and k != ord('z'):
-#                         print('a-->%s b-->%s c-->%s'%(chr(i),chr(j),chr(k)))
+#     for j in range(ord('x'),ord('z')+1):
+#         if i != j:
+#             for k in range(ord('x'),ord('z')+1):
+#                 if i!=j and i!=k and j!=k and i!=ord('x') and i != ord('y') and j != ord('z'):
+#                     print('%s %s %s'%(chr(i),chr(j),chr(k)))
 
 
 """
@@ -312,12 +427,222 @@ while m>=1:
 # print(l)
 
 
+"""
+test26利用递归方法求5!。
+"""
+# def cal(te):
+#     if te==1: return 1
+#     else: return te*cal(te-1)
+# print(cal(5))
 
 
+"""
+tet27题目：利用递归函数调用方式，将所输入的5个字符，以相反顺序打印出来
+"""
+
+# def prit(s,l):
+#     print(s[l-1])
+#     if l-1==0:
+#         return
+#     else:
+#         prit(s,l-1)
+# prit('asdfg',5)
 
 
+"""
+test28 题目：有5个人坐在一起，问第五个人多少岁？他说比第4个人大2岁。问第4个人岁数，
+他说比第3个人大2岁。问第三个人，又说比第2人大两岁。问第2个人，说比第一个人大两岁。最后问第一个人，他说是10岁。请问第五个人多大？
+""" #用递归
+
+# def find(t):
+#     if t == 1:
+#         return 10
+#     else: return 2+find(t-1)
+# print(find(5))
 
 
+"""
+test29 题目：给一个不多于5位的正整数，要求：一、求它是几位数，二、逆序打印出各位数字。
+"""
+# t = int(input().strip())
+# x1= int(t/10000)
+# x2 = int(t%10000/1000)
+# x3 = int(t%1000/100)
+# x4 = int(t%100/10)
+# x5 = int(t%10)
+# if x1 != 0: print(5,x5,x4,x3,x2,x1)
+# elif x2 != 0: print(4,x5,x4,x3,x2)
+# elif x3 != 0: print(3,x5,x4,x3)
+# elif x4 != 0: print(2,x5,x4)
+# else: print(2,x5)
+
+
+"""
+test30 题目：一个5位数，判断它是不是回文数。即12321是回文数，个位与万位相同，十位与千位相同。
+"""
+# t = int(input().strip())
+# x1= int(t/10000)
+# x2 = int(t%10000/1000)
+# x3 = int(t%1000/100)
+# x4 = int(t%100/10)
+# x5 = int(t%10)
+# if x1==x5 and x2==x4:
+#     print('this is palindrome.')
+
+#扩展为多位数的时候判断
+# s = input().strip()
+# len = len(s)
+# zj = int(len/2)
+# i=0
+# while i<zj:
+#     if s[i] == s[len-i-1]:
+#         i+=1
+#         continue
+#     else: break
+# if i==zj:
+#     print('This is a palindrome')
+# else:
+#     print('shit, why i\'m a loser')
+
+
+"""
+test31 题目：请输入星期几的第一个字母来判断一下是星期几，如果第一个字母一样，则继续判断第二个字母。
+"""
+# Monday
+# Tuesday
+# Wednesday
+# Thursday
+# Friday
+# saturday
+# sunday
+
+# s1 = input('请输入第一个字符>>>').strip()
+# if s1 == 'S':
+#     s2 = input('请输入第二个字符>>>').strip()
+#     if s2 == 'a':
+#         print('saturday')
+#     elif s2=='u':
+#         print('sunday')
+#     else:
+#         print('Your char is wrong')
+# elif s1 == 'M':
+#     print('Monday')
+# elif s1 == 'T':
+#     print('Tuesday')
+# elif s1 == 'W':
+#     print('Wednesday')
+# elif s1 == 'T':
+#     print('Thursday')
+# elif s1 == 'F':
+#     print('Friday')
+# else:
+#     print('your char is wrong')
+
+
+"""
+test32 题目：按相反的顺序输出列表的值。
+"""
+# s=['1','2','3']
+# print(s[::-1])            #--方法一
+# print(list(reversed(s)))  #--方法二
+
+
+"""
+test33题目：按逗号分隔列表。
+"""
+# l = [1,2,3,4]
+# s1 = ','.join(str(n) if n>0 else str(-n) for n in l )
+# print(s1)
+
+"""
+test34 题目：练习函数调用。
+"""
+# def f1():
+#     print('f1')
+# def f2():
+#     print('f2')
+#     f1()
+# if __name__ == '__main__':
+#     f2()
+
+"""
+test35 题目：文本颜色设置。
+"""
+# class bcolors:
+#     HEADER = '\033[95m'
+#     QKBLUE = '\033[94m'
+#     QKGREEN = '\033[92m'
+#     WARNING = '\033[93m'
+#     FAIL = '\033[91m'
+#     ENDC = '\033[0m'
+#     BOLD = '\033[1m'
+#     UNDERLINE = '\033[4m'
+# print(bcolors.WARNING+'warning word'+bcolors.ENDC) #在这个bcolors.ENDC后边颜色就不会变化，没有这个ENDC后边的就会一直变化
+# print('asd')
+
+
+"""
+test36 题目：求100之内的素数。
+"""
+# 即在for 循环中，如果没有从任何一个break中退出，则会执行和for对应的else
+# 只要从break中退出了，则else部分不执行。
+# for i in range(3,101):
+#     for j in range(2,i):
+#         if i%j == 0:
+#             break
+#     else:
+#         print(i)
+
+"""
+test37 题目：对10个数进行排序。
+"""
+# a=[1,5,2,6,3,4,9,8,7]
+# a.sort(reverse=True)   #当reverse是True的时候就是降序排列
+# print(a)
+
+
+"""
+test38 题目：求一个3*3矩阵主对角线元素之和。
+"""
+# a=[]
+# for i in range(3):
+#     a.append([])
+#     for j in range(3):
+#         a[i].append(1 if i==j else 0)
+# ans = 0
+# for i in range(3):
+#     ans+=a[i][i]
+# print(ans)
+
+
+"""
+test39 题目：有一个已经排好序的数组。现输入一个数，要求按原来的规律将它插入数组中。
+"""
+# s= [1,2,6,9,10]
+# insert = 4
+# if insert>s[len(s)-1]:
+#     s.append(insert)
+# else:
+#     s.append(s[len(s)-1])  #先把最后一个再增加一个
+#     for i in range(0,len(s)-1):
+#         if insert< s[i]:
+#             j=len(s)-2
+#             while j>=i:
+#                 s[j+1]=s[j]
+#                 j-=1
+#             s[i]=insert
+#             break
+# print(s)
+
+"""
+test 40 题目：将一个数组逆序输出。
+"""
+
+# s = [1,1,1,2,2,2]
+# n = len(s)
+# for i in range(int(len(s)/2)):
+#     s[i],s[n-i-1] = s[n-i-1],s[i]
+# print(s)
 
 
 """
@@ -347,3 +672,6 @@ for i in range(3):
     print("The number is %s"%num)
     num+=1
     autofunc()
+    
+    
+
