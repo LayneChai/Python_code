@@ -674,4 +674,416 @@ for i in range(3):
     autofunc()
     
     
+"""
+test43 题目：模仿静态变量(static)另一案例。
+"""#演示一个python作用域使用方法  静态变量的作用域可以是对象也可意识类名
+
+# class Foo():
+#     asd= 1
+#     def test(self):
+#         self.asd+=1
+#         print(self.asd)
+# if __name__ == '__main__':
+#     print(Foo.asd)
+#     f = Foo()
+#     f.test()
+#     f.test()
+
+
+"""
+test44 题目：两个 3 行 3 列的矩阵，实现其对应位置的数据相加，并返回一个新矩阵：
+"""  #因为空的二维数组不能建立只能是用append来创建二维数组
+# a=[
+#     [1,1,1],
+#     [2,2,2],
+#     [3,3,3]
+# ]
+# b=[
+#     [3,3,3],
+#     [2,2,2],
+#     [1,1,1]
+# ]
+# c=[[],[],[]]
+# for i in  range(3):
+#     for j in range(3):
+#         c[i].append(a[i][j]+b[i][j])
+# print(c)
+
+
+"""
+test45 题目：统计 1 到 100 之和。
+"""
+#方法一：
+# print(int((1+100)*100/2))
+#方法二：
+ans =0
+# for i in range(101):
+#     ans+=i
+# print(ans)
+
+"""
+test46 题目：求输入数字的平方，如果平方运算后小于 50 则退出
+"""
+# def test(a):
+#     return a*a
+# while True:
+#     t = int(input().strip())
+#     if test(t)<50:
+#         print(t)
+
+"""
+test47 题目：两个变量值互换。
+"""
+# a=1;b=2
+# a,b = b,a
+# print(a,b)
+
+"""
+test48 题目：数字比较。
+"""
+# a = int(input().strip())
+# b = int(input().strip())
+#
+# if a>b: print('a>b')
+# elif a==b: print('a=b')
+# else: print('a<b')
+
+"""
+test49题目：使用lambda来创建匿名函数。
+"""
+# MAX = lambda x,y: (x>y)*x+(y>x)*y
+# MIN = lambda x,y: (x<y)*x+(y<x)*y
+# print(MAX(1,2))
+
+
+"""
+test50 题目：输出一个随机数。
+"""
+import random
+# a=int(input('please input first number:').strip())
+# b=int(input('Please input second number:').strip())
+# print(random.uniform(a,b)) #当a<b的时候生成的随机数就大于a小于b的浮点数
+#当a>b的时候生成的随机数及大于b小于a的浮点数
+
+#生成指定范围内的整数 这个前边的数必须小于后边的数
+# a = int(input().strip())
+# b = int(input().strip())
+# print(random.randint(a,b))
+# ret = random.randrange(1,100,2)#从第一个开始到100结束按每步为2的基数递增的过程中得出的数列中选取对应的数字
+# print(ret)
+#多个字符中选取一个
+# print(random.choice('^&*^&^)(&()'))
+#多个字符中选取规定数量个字符
+# print(random.sample('&*(&)*()*&*(^&^*&',3))
+
+"""
+test51 题目：学习使用按位与 & 。
+"""
+# print(2&6)#　2的2进制10 6的二进制110  010&110 =10所以是2
+
+
+"""
+test52 题目：学习使用按位或 | 。
+"""
+# print(1|2)   #1的二进制  01 2的二进制 10 1|2==01|10 =11 =3
+
+"""
+test53 题目：学习使用按位异或 ^ 。
+"""
+# print(2^6) #2=10  6=110   2^6 = 010^110=100 =4
+
+"""
+test54 题目：取一个整数a从右端开始的4〜7位。
+"""
+#~(~0<<4)  ~优先级高于高于<< 所以~0是取反11111  ~0<<4 左移4位1110000   ~(110000) --> (001111)
+# a = int(input('>>>').strip())
+# a>>=4
+# print(a&(~(~0<<4)))
+
+"""
+test 55 题目：学习使用按位取反~。
+"""
+# a = 234
+# b =~a #按位取反就相当于是把一个数变成2进制之后把0变1 1变0
+# print()
+
+"""
+test56 题目：画图，学用circle画圆形。
+"""
+# if __name__ == '__main__':
+#     from tkinter import *
+#     canvas = Canvas(width=800,height=600,bg='yellow')
+#     canvas.pack(expand=YES,fill=BOTH)
+#     k=1
+#     j=1
+#     for i in range(0,26):
+#         canvas.create_oval(0,0,310+k,250+k,width = 1)
+#         k+=j    #create_oval中的坐标是左上角和右下角的点
+#         j+=0.3
+#     mainloop()  #进入消息循环
+
+# from tkinter import *
+# root = Tk()  #创建一个主窗口用于容纳整个GUI程序
+#
+# #设置主窗口对象的标题栏
+# root.title('NEW')
+#
+# #添加一个Label组件，Label组件是GUI程序中最常用的组件之一
+# #label组件可以显示文本，图标，图片
+# thelabel = Label(root,text='就是体验一下') #制定这个label是属于哪个窗口的
+# thelabel.pack() #相当于把这个小部件放到主窗口
+# root.mainloop()
+
+# from tkinter import *
+# root = Tk()    #创建一个主窗口
+# li= ['c','C++','java','python']
+# movie = ['css','Jquery','Bootstrap']
+#
+# #创建两个组建隶属于root主窗口
+# listb = Listbox(root)
+# listb2= Listbox(root)
+#
+# for item in li:  #在第一个小部件中加入数据
+#     listb.insert(0,item)
+#
+# for item in li:  #在第二个小部件中加入数据
+#     listb2.insert(0,item)
+#
+# listb.pack()   #将小部件放置到主窗口
+# listb2.pack()
+# root.mainloop()  #进入消息循环
+
+#画出一个矩形
+# import tkinter
+#
+# root = tkinter.Tk() #创建主视图
+# cv = tkinter.Canvas(root,bg='white') #创建一个画布
+#
+# #创建一个矩形  坐标为(10,10,110,110)
+# cv.create_rectangle(10,10,110,110)
+# cv.pack()
+# root.mainloop()  #消息循环
+
+
+"""
+test57 题目：画图，学用line画直线。
+"""
+# from tkinter import *
+# root =Tk()
+# root.title('test')
+# root.geometry('300x100')
+# root.resizable(width=True,height=True)
+#
+# if __name__ == '__main__':
+#     canvas = Canvas(width=300, height=300, bg='green')
+#     canvas.pack(expand=YES,fill=BOTH)
+#     x0=263
+#     y0=263
+#     y1=275
+#     #左上角是（0，0）
+#     #canvas.create_line(起点x坐标, 起点y坐标, 终点x坐标, 终点y坐标, width=1, fill='red')
+#
+#     for i in range(19):
+#         canvas.create_line(x0,y0,x0,y1,width=1,fill='red')
+#         x0-=5
+#         y0-=5
+#         y1 = y1+5
+#     x0 = 263
+#     y0 = 263
+#     y1 = 275
+#     for i in range(21):
+#         canvas.create_line(x0,y0,x0,y1,fill = 'red')
+#         x0+=5
+#         y0+=5
+#         y1+=5
+#     mainloop()
+#--------------------------------拓展------------------------#
+#控件Label
+# text　   要现实的文本
+# bg　　  背景颜色
+# font　   字体(颜色, 大小)
+# width　 控件宽度
+# height　控件高度
+# l = Label(root,text='寝室长:蔡大汉',bg ='white',font =('Arial',12))#,width=5,height=2)
+# l.pack(side=TOP)   #这里的side可以赋值为LEFT  RTGHT TOP  BOTTOM
+
+
+# #控件 Frame 在屏幕上创建一块矩形区域,多作为容器来布局窗体
+#
+# frm = Frame(root)
+# #left
+# frm_l = Frame(frm)
+# Label(frm_l,text='1号床:蔡大汉',bg='red',font=('Arial',15)).pack(side=TOP)
+# Label(frm_l,text='2号床:It\'s me',font=('Arial',15)).pack(side=TOP)
+# frm_l.pack(side=LEFT)
+# #right
+# frm_r = Frame(frm)
+# Label(frm_r,text='3号床:单伟华',bg='yellow',font=('Arial',15)).pack(side=TOP)
+# Label(frm_r,text='4号床:冯岩旭',bg='green',font=('Arial',15)).pack(side=TOP)
+# frm_r.pack(side=RIGHT)
+# frm.pack()
+# root.mainloop() #进入消息循环
+
+#Entry 创建单行文本框
+# var = StringVar()
+# e = Entry(root,textvariable=var)  #
+# var.set('hello')
+# e.pack()
+# root.mainloop()
+
+#text 向该文件中输入文本
+
+# t = Text(根对象)
+# # 插入:t.insert(mark, 内容)
+# # 删除:t.delete(mark1, mark2)
+# # 其中,mark可以是行号,或者特殊标识,例如
+# # INSERT:光标的插入点CURRENT:鼠标的当前位置所对应的字符位置
+# # END:这个Textbuffer的最后一个字符
+# # SEL_FIRST:选中文本域的第一个字符，如果没有选中区域则会引发异常
+# # SEL_LAST：选中文本域的最后一个字符，如果没有选中区域则会引发 异常
+# t =  Text(root)
+# t.insert(1.0,'蔡大汉\n')
+# t.insert(END,'is a big pig\n')
+# t.pack()
+# root.mainloop()
+# input()
+# t.insert(SEL_FIRST,'test')
+# canvas = Canvas(width=300,height=300,bg='green')
+
+#Button 插件
+
+# Button(根对象, [属性列表])
+# def printhello():
+#     t.insert(SEL_FIRST,'tttt')  #在选中文本的前方加入文本
+# t = Text(root)
+# t.insert(1.0,'as\nwer\nhjk')
+# t.pack()
+# Button(root,text='press',command=printhello).pack()  #打包到主窗口
+# root.mainloop()
+
+#Listbox  　列表控件,可以含有一个或多个文本框,可单选也可多选
+# 创建:lb = ListBox(根对象, [属性列表])
+# 绑定变量 var=StringVar()    lb=ListBox(根对象, listvariable = var)
+# 得到列表中的所有值   var.get()
+# 设置列表中的所有值   var.set((item1, item2, .....))
+# 添加:lb.insert(item)
+# 删除:lb.delete(item,...)
+# 绑定事件 lb.bind('<ButtonRelease-1>', 函数)
+# 获得所选中的选项 lbl.get(lb.curselection())
+# selectmode可以为BROWSE MULTIPL SINGLE
+#
+# def print_item(event):
+#     print(lb.get(lb.curselection()))
+#
+# var = StringVar()
+# lb = Listbox(root,listvariable=var)
+# list_item = [1,2,3,4]
+# for item in list_item:
+#     lb.insert(END,item)
+#
+# lb.delete(2,4)          #at now the controller content is 1 and 3
+#
+# var.set(('a','ab'))     #
+# print(var.get())
+# lb.bind('<ButtonRelease-1>',print_item) #调用print_item打印所选内容
+# lb.pack()
+# root.mainloop()
+
+
+#scrolllbar
+
+#在屏幕上创建一块矩形区域,多作为容器来布局窗体
+# 　Frame(根对象, [属性列表]), 最长用的用法是和别的控件一起使用.
+# def print_item(event):
+#     print(lb.get(lb.curselection()))
+#
+# var = StringVar()  #定义一个变量
+# lb = Listbox(root,height=5,selectmode=BROWSE,listvariable=var)
+# lb.bind('<ButtonRelease-1>',print_item)
+# list_item = [1,2,3,4,5,6]
+# for item in list_item:
+#     lb.insert(END,item)
+#
+# scrl = Scrollbar(root)
+# scrl.pack(side=RIGHT,fill=Y)
+# lb.configure(yscrollcommand = scrl.set)
+# 在Scrollbar的构造中参数command=lb.yview  表示滚动条对列表框进行纵向的滚动。
+# lb.configure(yscrollcommand=scroll.set)语句为lb配置，告诉系统列表框安装了纵向的滚动条(croll.set)。列表框使用插入方法添加列表项。
+# lb.pack(side=LEFT,fill=BOTH)
+# scrl['command']= lb.yview
+# root.mainloop()
+
+
+"""
+test58 题目：画图，学用rectangle画方形。
+"""
+# rectangle(int left, int top, int right, int bottom)
+# 参数说明：(left ，top )为矩形的左上坐标，(right,bottom)为矩形的右下坐标，两者可确定一个矩形的大小
+
+# from tkinter import *
+# root = Tk()            #这里是建立父控件
+# root.title('Canvas')
+# canvas = Canvas(root,width=400,height=400,bg='yellow')
+# x0 = 263
+# y0 = 263
+# x1 = 275
+# y1 = 275
+# for i in range(19):
+#     """
+#     outline = 'blue' - -边框颜色
+#     fill = 'red' - -背景色
+#     """
+#     sel=canvas.create_rectangle(x0,y0,x1,y1,outline='white')
+#     x0 -= 5
+#     y0 -= 5
+#     x1 += 5
+#     y1 += 5
+# canvas.pack()
+''' 
+其中 outline='blue' --边框颜色 
+fill = 'red' --背景色 
+itemconfig() 是更新底色和边框色 
+'''
+# canvas.itemconfig(sel,fill='red',outline='white')
+# root.mainloop()
+
+"""
+test59 题目：画图，综合例子
+"""
+# from tkinter import *
+# canvas = Canvas(width=300,height=300,bg='green')
+# expand置1 使能fill属性
+# expand置0 关闭fill属性
+# fill=X        当GUI窗体大小发生变化时，widget在X方向跟随GUI窗体变化
+# fill=Y       当GUI窗体大小发生变化时，widget在Y方向跟随GUI窗体变化
+# fill=BOTH 当GUI窗体大小发生变化时，widget在X、Y两方向跟随GUI窗体变化
+# canvas.pack(expand = YES, fill = BOTH)   #fill=BOTH是把两边的都填充上  X是横向填充   Y是纵向填充
+# x0=150
+# y0=100
+# canvas.create_oval(x0-10,y0-10,x0+10,y0+10,width=2)
+# canvas.create_oval(x0-20,y0-20,x0+20,y0+20,width=2)
+# canvas.create_oval(x0-50,y0-50,x0+50,y0+50,width=2)
+# import math
+# B = 0.809
+# for i in range(16):
+#     a = 2*math.pi/16*i
+#     x = math.ceil(x0+48*math.cos(a))   #返回一个数上限大于等于当前数
+#     y = math.ceil(y0+48*math.sin(a)*B)
+#     canvas.create_line(x0,y0,x,y,fill = 'red')
+# canvas.create_oval(x0-60,y0-60,x0+60,y0+60)
+#
+#
+# for i in range(501):
+#     for k in range(17):
+#         a = (2*math.pi/16)*k + (2*math.pi/180)*i
+#         x = math.ceil(x0+48*math.cos(a))
+#         y = math.ceil(y0+48+math.sin(a)*B)
+#         canvas.create_line(x0,y0,x,y,fill='red')
+#     for j in range(51):
+#         a = (2*math.pi/16)*k + (2*math.pi/180)*i-1
+#         x = math.ceil(x0+48*math.cos(a))
+#         y = math.ceil(y0+48*math.sin(a)*B)
+#         canvas.create_line(x0,y0,x,y,fill='red')
+#
+# mainloop()
 
