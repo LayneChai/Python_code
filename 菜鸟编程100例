@@ -1087,3 +1087,567 @@ test59 题目：画图，综合例子
 #
 # mainloop()
 
+
+
+"""
+test60 题目：计算字符串长度。
+"""
+# strl = 'strlen'
+# print(len(strl))
+
+
+"""
+test61 题目：打印出杨辉三角形（要求打印出10行如下图）
+"""
+# a=[]
+# for i in range(10):
+#     a.append([])
+#     for j in range(0,i+1):
+#         if j == 0 or j == i:
+#             a[i].append(1)
+#         else:
+#             a[i].append(a[i-1][j-1]+a[i-1][j])
+# # print(a)
+# for i in range(10):
+#     for j in range(0, i + 1):
+#         print(a[i][j],end=' ')
+#     print('')
+
+
+"""
+test62 题目：查找字符串。
+"""
+# str1 = 'qwedafechaiyinchaiyinleileiasdfr'
+# str2 = 'chaiyinlei'
+# print(str1.find(str2))   #返回一个子串的初始位置
+
+
+"""
+test63 题目：画椭圆。　
+"""
+# from tkinter import *
+# from time import sleep
+# x = 360
+# y = 160
+# top = y-30
+# bottom = y-30
+# canvas = Canvas(width=400,height=600,bg='white')
+# for i in range(20):
+#    canvas.create_oval(250-top,250-bottom,250+top,250+bottom)
+#    top-=5
+#    bottom+=5
+# canvas.pack()
+# mainloop()  #加入循环队列
+
+"""
+test64 题目：利用ellipse 和 rectangle 画图。
+"""
+# from tkinter import *
+# canvas = Canvas(width = 400,height = 600,bg = 'white')   #canvas默认父控件是master
+# left = 20
+# right = 50
+# top = 50
+# num = 15
+# for i in range(num):
+#     canvas.create_oval(250-right,250-left,250+right,250+left)
+#     canvas.create_oval(250-20,250-top,250+20,250+top)
+#
+#     canvas.create_rectangle(20-2*i,20-2*i,10*(i+2),10*(i+2))
+#
+#     right += 5
+#     left += 5
+#     top += 10
+#
+# canvas.pack()
+# mainloop()
+
+"""
+test65 题目：一个最优美的图案。　
+"""
+
+# import math
+# class PTS:
+#     def __init__(self):
+#         self.x = 0
+#         self.y = 0
+# points = []
+# from tkinter import *
+# def LineToDemo():
+#
+#     screenx = 400
+#     screeny = 400
+#     canvas = Canvas(width = screenx,height = screeny,bg = 'white')
+#
+#     AspectRatio = 0.85
+#     MAXPTS = 15
+#     h = screeny
+#     w = screenx
+#     xcenter = w / 2
+#     ycenter = h / 2
+#     radius = (h - 30) / (AspectRatio * 2) - 20
+#     step = 360 / MAXPTS
+#     angle = 0.0
+#     for i in range(MAXPTS):
+#         rads = angle * math.pi / 180.0
+#         p = PTS()
+#         p.x = xcenter + int(math.cos(rads) * radius)
+#         p.y = ycenter - int(math.sin(rads) * radius * AspectRatio)
+#         angle += step
+#         points.append(p)
+#     canvas.create_oval(xcenter - radius,ycenter - radius,
+#                        xcenter + radius,ycenter + radius)
+#     for i in range(MAXPTS):
+#         for j in range(i,MAXPTS):
+#             canvas.create_line(points[i].x,points[i].y,points[j].x,points[j].y)
+#
+#     canvas.pack()
+#     mainloop()
+# if __name__ == '__main__':
+#     LineToDemo()
+
+"""
+test 66 题目：输入3个数a,b,c，按大小顺序输出。　
+"""
+
+# a = int(input().strip())
+# b = int(input().strip())
+# c = int(input().strip())
+# if a<b:
+#     a,b=b,a
+# if a<c:
+#     a,c=c,a
+# if b<c:
+#     b,c=c,b
+# print(a,b,c)
+
+"""
+test 67 题目：输入数组，最大的与第一个元素交换，最小的与最后一个元素交换，输出数组
+"""
+# s=[1,6,23,0,546,234,6,234,745,4]
+# max1 = 0
+# min1 = 0
+# for i in range(len(s)):
+#     if s[max1]<s[i]:
+#         max1=i
+#     if s[min1]>s[i]:
+#         min1=i
+# if max1 == len(s)-1 and min1 == 0:
+#     s[0],s[len(s)-1]=s[len(s)-1],s[0]
+# elif max1 == len(s)-1 or min1 == 0:
+#     s[0], s[len(s) - 1] = s[len(s) - 1], s[0]
+#     s[min1],s[max1] = s[max1],s[min1]
+# else:
+#     s[max1],s[0]=s[0],s[max1]
+#     s[min1],s[len(s)-1]=s[len(s)-1],s[min1]
+# print(s)
+
+"""
+test 68 题目：有n个整数，使其前面各数顺序向后移m个位置，最后m个数变成最前面的m个数
+"""
+# n = int(input('n>>').strip())
+# m = int(input('m>>').strip())
+# def move(array,n,m):
+#     array_end = array[n-1]
+#     for i in range(n-1,-1,-1):
+#         array[i] = array[i-1]
+#     array[0] = array_end
+#     m-=1
+#     if m>0:move(array,n,m)
+# numer =[1,2,3,4,5,6,7,8,9]
+# move(numer,n,m)
+# print(numer)
+
+"""
+test69 题目：有n个人围成一圈，顺序排号。从第一个人开始报数（从1到3报数），凡报到3的人退出圈子，问最后留下的是原来第几号的那位
+"""
+# maxn = 50
+# n = int(input('请输入总人数：').strip())
+# num = []
+# for i in range(n):
+#     num.append(i+1)
+# i = 0
+# k = 0
+# m = 0  #记录已经取出了几个数
+# while m<n-1:
+#     if num[i] != 0:k+=1
+#     if k==3:
+#         k=0
+#         m+=1
+#         num[i]=0
+#     i+=1
+#     if i == n: i=0
+# i=0
+# while num[i] == 0: i+=1
+# print(num[i])
+
+
+"""
+test70 题目：写一个函数，求一个字符串的长度，在main函数中输入字符串，并输出其长度。
+"""
+# if __name__ == '__main__':
+#     s = input().strip()
+#     print(len(s))
+
+"""
+test71 题目：编写input()和output()函数输入，输出5个学生的数据记录
+"""
+# student = []
+# # def input_test():
+# #     student.append(input('name:'))
+# #     student.append(input('age:'))
+# # def output_test():
+# #     print(student[0],student[1])
+# # if __name__ == '__main__':
+# #     input_test()
+# #     output_test()
+
+"""
+test72 题目：创建一个链表。
+"""
+# s=[]
+# for i in range(12):
+#     s.append(int(input('please input a number').strip()))
+# print(s)
+
+"""
+test73 题目：反向输出一个链表。
+"""
+
+# ret = [1,2,3,4,5]
+# # ret.reverse()
+# # ret = list(reversed(ret))
+# # ret = ret[::-1]
+# ret = ret[-1::-1]   #也可以这样指明从最后开始向前
+# print(ret)
+
+
+"""
+test74 题目：列表排序及连接。
+"""
+
+# a = [1,4,2,5,3,6]
+# b = [7,8,9]
+#三种排列方式
+# a.sort()
+# a.sort(reverse=True)
+# a= sorted(a,reverse=True)
+#两种连接方式
+# a= a+b
+# a.extend(b)
+# print(a)
+
+
+"""
+test75 题目：放松一下，算一道简单的题目。
+"""
+# if __name__ == '__main__':
+#     n =0
+#     for i in range(10):
+#         if i != 1: n+=1
+#         if i == 3: n+=1
+#         if i == 4: n+=1
+#         if i != 4 : n+=1
+#         if n==3 : print(n)
+
+
+"""
+test76题目：编写一个函数，输入n为偶数时，调用函数求1/2+1/4+...+1/n,当输入n为奇数时，调用函数1/1+1/3+...+1/n
+"""
+
+# def calculate_test(n):
+#     ans=0
+#     if n%2==0:
+#         for i in range(2,n+1,2):
+#             ans+=1/i
+#     else:
+#         for i in range(1,n+1,2):
+#             ans+=1/i
+#     return ans
+# if __name__ == '__main__':
+#     n = int(input('please input a number:').strip())
+#     print(calculate_test(n))
+
+
+
+"""
+test 77 题目：循环输出列表
+"""
+#
+# a =[1,2,3,4,5,6]
+# for i in range(len(a)):
+#     print(a[i])
+
+"""
+test78 题目：找到年龄最大的人，并输出。请找出程序中有什么问题。
+"""
+# person={'cyl':21,'xtw':20,'fyx':22,'swh':19}
+# jl='cyl'
+# for i,j in person.items():
+#     if person[jl]<j:
+#         jl=i
+# print(jl)
+
+"""
+test79题目：字符串排序。
+"""  #字符串排序是按照ascII顺序排列的
+# str1 = input('please input the first character:')
+# str2 = input('please input the second character:')
+# str3 = input('please input the third character:')
+#
+# if str1<str2: str1,str2=str2,str1
+# if str1<str3: str1,str3=str3,str1
+# if str2<str3: str2,str3=str3,str2
+# print(str1,str2,str3)
+
+"""
+test80 题目：海滩上有一堆桃子，五只猴子来分。第一只猴子把这堆桃子平均分为五份，多了一个，这只猴子把多的一个扔入海中，拿走了一份。
+第二只猴子把剩下的桃子又平均分成五份，又多了一个，它同样把多的一个扔入海中，拿走了一份，第三、第四、第五只猴子都是这样做的，
+问海滩上原来最少有多少个桃子？
+"""
+#For Acmer ,it's imaginative question. because request the smallest,so the last is the least
+#so the answer is 4*x
+# num = int(input('please input the monkey\'s number:').strip())
+# x=1
+# def func_(n):
+#     if n==num:
+#         return 4*x;
+#     else: return func_(n+1)*5/4+1
+#
+# while 1:
+#     count=0
+#     for i in range(1,num):
+#         if not func_(i)%4:
+#             count+=1
+#     if count==num-1:
+#         print(int(func_(0))) #因为这个球的是总数所以冲0开始
+#         break
+#     else: x+=1
+
+"""
+test81 题目：809*??=800*??+9*?? 其中??代表的两位数, 809*??为四位数，8*??的结果为两位数，9*??的结果为3位数。求??代表的两位数，
+及809*??后的结果。
+"""
+# for i in range(10,100):
+#     if 809*i>=1000 and 809*i<10000 and 8*i>=10 and 8*i<100 and 9*i>=100 and 9*i<1000:
+#         print(i,809*i)
+
+"""
+test82 题目：八进制转换为十进制
+"""  #chr() 把十进制转化成ascII值  ord()把ascII转化成10进制
+import math
+# s = input('please input oct number:').strip()
+# n=0
+# for i in range(len(s)):
+#     n=n*8+ord(s[i])-ord('0')  #这个用的真是巧妙
+# print(n)
+
+"""
+test83 题目：求0—7所能组成的奇数个数。
+"""
+#分析可得一位奇数有4个  两位7*4  三位7*8*4 四位7*8*8*4五位7*8*8*8*4
+# ans=4
+# sum=4
+# for i in range(2,9):
+#     print(sum)
+#     if i==2: ans*=7
+#     else: ans *= 8
+#     sum+=ans
+# print(sum)
+
+"""
+test84 题目：连接字符串。
+"""
+# a = ['1','2','3']
+# a= ''.join(a)
+# print(a)
+
+
+"""
+test85 题目：输入一个奇数，然后判断最少几个 9 除于该数的结果为整数。
+"""
+# ans =9
+# cnt=1
+# js = int(input().strip())
+# while 1:
+#     if ans%js==0:
+#         break
+#     cnt+=1
+#     ans+=9*(10**(cnt-1))
+# print('%d 个9可以整除%d。'%(cnt,js))
+
+"""
+test86 题目：两个字符串连接程序。
+"""
+# a ='asdasd'
+# b ='zxczxc'
+# print(a+b)
+
+"""
+test87 题目：回答结果（结构体变量传递）。
+"""
+# class student():
+#     s=0
+#     j=0
+# def f(stu):
+#     print(stu.s)
+#     print(stu.j)
+#
+# a = student()
+# a.s='cyl'
+# a.j='ctw'
+# f(a)
+
+"""
+test88 题目：读取7个数（1—50）的整数值，每读取一个值，程序打印出该值个数的＊。
+"""
+# i=0
+# while i<7:
+#     i+=1
+#     n = int(input('please input number:').strip())
+#     j=0
+#     while j<n:
+#         j+=1
+#         print('*',end='')
+#     print('')
+
+"""
+tesst89 题目：某个公司采用公用电话传递数据，数据是四位的整数，在传递过程中是加密的，加密规则如下：每位数字都加上5,
+然后用和除以10的余数代替该数字，再将第一位和第四位交换，第二位和第三位交换。
+"""
+# s = int(input().strip())
+# a1 = int((int(s/1000)+5)%10)
+# a2 = int((int((s%1000)/100)+5)%10)
+# a3 = int((int((s%100))/10+5)%10)
+# a4 = int((int(s%10)+5)%10)
+# print('%d%d%d%d'%(a4,a3,a2,a1))
+
+"""
+test90 题目：列表使用实例。
+"""
+# s=[1,2,3]
+# s.append(4)
+# s.extend([1,2,3])  #相当于把另一个列表加入发哦其中
+# s.append([12,13,14])  #相当于加一个列表到里边
+# print(s)
+
+"""
+test91 题目：时间函数举例1。
+"""
+# time.time()：返回当前时间的时间戳。
+# time.localtime([secs])：将一个时间戳转换为当前时区的struct_time。secs参数未提供，则以当前时间为准。
+# time.gmtime([secs])：和localtime()方法类似，gmtime()方法是将一个时间戳转换为UTC时区（0时区）的struct_time。
+# time.mktime(t)：将一个struct_time转化为时间戳。
+# time.sleep(secs)：线程推迟指定的时间运行。单位为秒。
+# time.clock()：这个需要注意，在不同的系统上含义不同。在UNIX系统上，它返回的是“进程时间”，它是用秒表示的浮点数（时间戳）。
+# 而在WINDOWS中，第一次调用，返回的是进程运行的实际时间。而第二次之后的调用是自第一次调用以后到现在的运行时间。
+# （实际上是以WIN32上QueryPerformanceCounter()为基础，它比毫秒表示更为精确）
+# time.asctime([t])：把一个表示时间的元组或者struct_time表示为这种形式：'Sun Jun 20 23:21:05 1993'。如果没有参数，将会将time.localtime()作为参数传入。
+# time.ctime([secs])：把一个时间戳（按秒计算的浮点数）转化为time.asctime()的形式。如果参数未给或者为None的时候，将会默认time.time()为参数。它的作用相当于time.asctime(time.localtime(secs))。
+# time.strftime(format[, t])：把一个代表时间的元组或者struct_time（如由time.localtime()和time.gmtime()返回）转化为格式化的时间字符串。如果t未指定，
+# 将传入time.localtime()。如果元组中任何一个元素越界，ValueError的错误将会被抛出。
+# import time
+# print(time.time())   #返回一个时间戳相对于
+# print(time.ctime(time.time()))
+# print(time.asctime(time.localtime(time.time())))  #本地时间（北京时间）
+# print(time.asctime(time.gmtime(time.time())))     #UTC时间
+
+"""
+test92 题目：时间函数举例2。
+"""
+
+# import time
+# start = time.time()
+# for i in range(10):
+#     time.sleep(0.5)
+#
+# end = time.time()
+# print(end-start)
+
+
+
+"""
+test93 题目：时间函数举例3。
+"""
+# import time   #clock在以后将会移除
+# start = time.clock()
+# for i in range(10):
+#     time.sleep(0.5)
+# end = time.clock()
+# print(end-start)
+
+"""
+test94 题目：时间函数举例4,一个猜数游戏，判断一个人反应快慢。
+"""
+
+# import time,random
+#
+# gues = random.randint(0,2**32)%100
+# start = time.clock()
+# while True:
+#     q= int(input().strip())
+#     if q == gues:
+#         break
+#     elif q>gues:
+#         print('It\'s too bigger')
+#     else:print('It\'s too small')
+# end = time.clock()
+# print(end-start)
+
+
+"""
+test95 题目：字符串日期转换为易读的日期格式
+"""
+# from dateutil import parser
+# te = parser.parse('Aug 28 2018 12:00PM')
+# print(te)
+
+
+"""
+test96 题目：计算字符串中子串出现的次数。
+"""
+# s1 = 'cccccylccccvcyl'
+# s2= 'cyl'
+# # print(s1.find(s2))  #返回第一个查找到的位置
+# print(s1.count(s2)) #统计有多少个子串在父串中
+
+
+"""
+test97 题目：从键盘输入一些字符，逐个把它们写到磁盘文件上，直到输入一个 # 为止。
+"""
+# file_name = input('please input file name ')
+# with open(file_name,'w') as f:
+#     ch = input().strip()
+#     while ch != '#':
+#         f.write(ch)
+#         ch = input().strip()
+
+
+"""
+test98 题目：从键盘输入一个字符串，将小写字母全部转换成大写字母，然后输出到一个磁盘文件"test"中保存。
+"""
+# with open('ttest','w') as f:
+#     while True:
+#         s = input().strip()
+#         s.upper()
+#         if s.__eq__('quit'): break
+#         f.write(s)
+
+"""
+test99 题目：有两个磁盘文件A和B,各存放一行字母,要求把这两个文件中的信息合并(按字母顺序排列), 输出到一个新文件C中。
+"""
+# with open('text1','r') as f:
+#     s1 = f.read()
+# with open('text2','r') as f:
+#     s2 = f.read()
+# print(''.join(list(s1+s2)))
+
+"""
+test100 题目：列表转换为字典。
+"""
+# s=['a','b']
+# l=[1,2]
+# print(dict([s,l]))  #列表转化为字典
+
+
+
+#------------------------------------------------------END--------------------------------------------------#
