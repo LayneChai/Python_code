@@ -1,0 +1,36 @@
+#一些操作
+# s = [1,'0',3]
+# if all(s):     #如果所有的都是True，则就返回True
+#     print('s all is true')
+#
+# if any(s): #如果任何一个是True，则就返回True
+#     print('s')
+# import operator
+# ret = operator.ge(2,2)
+# print(ret)
+
+#把一个列表中的多个元组转化成字典
+# l = [('1','1'),('2',2)]
+# d =dict(l)
+# print(d)
+
+#利用enumerate(list) 遍历列表
+# l = [1,2,3]
+# for i,item in enumerate(l):
+#     print(i,item)
+
+#isinstance  #判断数据类型
+# if isinstance({'1':1},dict):
+#     print('dict')
+
+#pow
+# mod=10
+# ret=pow(2,200,mod)   #2^200%mod
+# print(ret)
+
+# zip  返回一个含有元组的列表
+# l1 = ('1','2')
+# l2 = ('3','4')
+#
+# out = zip(l1,l2)
+# print(list(out))
