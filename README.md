@@ -1,2 +1,2 @@
 # Python_code
-# My study way.
+# 京东评论爬虫代码 
